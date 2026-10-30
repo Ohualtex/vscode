@@ -8,12 +8,10 @@ import { RepoContext } from '../../git/common/gitService';
 
 
 /**
- * Contains a subset of information needed to construct `IDeserializedWorkspaceState`
- * This is what is saved to the state.json files
+ * Snapshot of the workbench state that internal feedback reports include.
  */
 export interface ISerializedWorkspaceState {
 	readonly workspaceFoldersFilePaths: string[] | undefined;
-	readonly workspaceFolderFilePath: string | undefined;
 	readonly repoContexts: Array<RepoContext | undefined> | undefined;
 	readonly activeTextEditor: {
 		selections: { anchor: vscode.Position; active: vscode.Position; isReversed: boolean }[];
@@ -21,14 +19,6 @@ export interface ISerializedWorkspaceState {
 		visibleRanges: { start: vscode.Position; end: vscode.Position }[];
 		languageId: string;
 	} | undefined;
-	readonly symbols: {
-		name: string;
-		kind: vscode.SymbolKind;
-		containerName: string;
-		filePath: string;
-		start: vscode.Position;
-		end: vscode.Position;
-	}[] | undefined;
 	readonly notebookDocumentFilePaths: string[] | undefined;
 	readonly activeFileDiagnostics: {
 		start: vscode.Position;
@@ -51,10 +41,7 @@ export interface ISerializedWorkspaceState {
 		selections: { start: number; end: number }[];
 		documentFilePath: string;
 	} | undefined;
-	readonly lsifIndex?: string;
-	readonly changeFiles?: { path: string; contents: string }[];
 	readonly textDocumentFilePaths: string[];
-	readonly testFailures?: IWorkspaceStateTestFailure[];
 }
 
 export interface ISerializedDiagnosticRelatedInformation {
@@ -62,18 +49,4 @@ export interface ISerializedDiagnosticRelatedInformation {
 	readonly start: vscode.Position;
 	readonly end: vscode.Position;
 	readonly filePath: string;
-}
-
-export interface IWorkspaceStateTestFailure {
-	message: string;
-	line: number;
-	column: number;
-	file_path: string;
-}
-
-export interface IWorkspaceStateChangeFile {
-	/** Path relative to the workspace folder */
-	readonly path: string;
-	/** Contents with which to replace the file. */
-	readonly contents: string;
 }

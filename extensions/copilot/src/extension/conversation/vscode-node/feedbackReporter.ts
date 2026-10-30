@@ -133,7 +133,7 @@ export class FeedbackReporter extends Disposable implements IFeedbackReporter {
 		const intent = turn.getMetadata(IntentInvocationMetadata)?.value.intent;
 		const intentDump = intent ? this._embedCodeblock('INTENT', `[${intent.id}] ${intent.description}`) : '';
 		const responseDump = this._embedCodeblock('ASSISTANT', turn.responseMessage?.message || '');
-		const workspaceState = await this._instantiationService.createInstance(WorkspaceStateSnapshotHelper).captureWorkspaceStateSnapshot([]);
+		const workspaceState = await this._instantiationService.createInstance(WorkspaceStateSnapshotHelper).captureWorkspaceStateSnapshot();
 		const workspaceStateDump = this._embedCodeblock('WORKSPACE STATE', JSON.stringify(workspaceState, null, 2));
 		const toolsDump = params?.body?.tools ? this._embedCodeblock('TOOLS', JSON.stringify(params.body.tools, null, 2)) : '';
 		const metadata = this._embedCodeblock('METADATA', `requestID: ${turn.id}\nmodel: ${params?.model}`);
